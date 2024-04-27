@@ -1,6 +1,8 @@
 package com.analiseCredito.service.strategy.Impl;
 
+import com.analiseCredito.constantes.MensagemConstantes;
 import com.analiseCredito.domain.Proposta;
+import com.analiseCredito.exceptions.StrategyException;
 import com.analiseCredito.service.strategy.CalculoPonto;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -15,7 +17,8 @@ public class NomeNegativadoImpl implements CalculoPonto {
     public int calcular(Proposta proposta) {
         if (nomeNegativado()) {
             return 100;
-        } else throw new RuntimeException("Usuário negativado");
+        } else
+            throw new StrategyException(String.format(MensagemConstantes.CLIENTE_NEGATIVADO, proposta.getUsuario().getNome()));
     }
 
     private boolean nomeNegativado() {
